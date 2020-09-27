@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Menu from './Menu';
 import headerData from './config/header-config.js';
 import logo from './logo.svg';
 
@@ -14,23 +15,22 @@ const Header = () => {
     }, []);
 
     return (
-        <header className="header">
+        <header className="header" onMouseOver={() => setSelectedItem()}>
             <div className="header__tagline">{newInTagline}</div>
             <div className="header__logo" >
                 <img className="header__logo-image" src={logo} alt="logo" />
             </div>
             <div className="header__menu">
                 {headers && headers.map(({ name, id }) => {
-                    return <span 
-                        key={`${name}_${id}`}
-                        className="header__menu-item"
-                        onMouseLeave={() => setSelectedItem()}
-                        onMouseEnter={() => setSelectedItem(id)}>
-                            {name}
+                    return <span key={ id } className="header__menu-item" onMouseOver={(event) => {
+                        event.stopPropagation();
+                        setSelectedItem(id)
+                    }}>
+                            { name }
                         </span>;
                 })}
             </div>
-            {selectedItem && <div>{selectedItem}</div>}
+            {selectedItem && <Menu id={selectedItem} />}
         </header>
     );
 }
