@@ -21,4 +21,23 @@ const filterChildLinks = (children_data) => {
     return return_object;
 }
 
-export { filterChildLinks }
+const filterImages = (menuData) => {
+    const returnObject = {};
+    console.log(menuData);
+    Object.keys(menuData).forEach((key) => {
+        const isImageProp = key.match(/dropdown_image/g);
+        if(isImageProp && (key !== 'dropdown_image_enabled')){
+            const propVal = key.match(/(url|title|link)/)[0];
+            const imageIndex = (key.match(/[0-9]/g) || ["0"])[0];
+            if(!returnObject[imageIndex]){
+                returnObject[imageIndex] = {};
+            }
+            console.log(propVal);
+            returnObject[imageIndex][propVal] = menuData[key];
+        }
+    });
+
+    return Object.keys(returnObject).map(val => returnObject[val]);
+}
+
+export { filterChildLinks, filterImages }

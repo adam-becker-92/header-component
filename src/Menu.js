@@ -1,18 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import headerData from './config/header-config.js';
-import { filterChildLinks } from './helper-functions.js';
+import { filterChildLinks, filterImages } from './helper-functions.js';
 
 const Menu = ({ id: selectedId }) => {
     const [ selectedMenuItems, setSelectedMenuItems ] = useState();
+    const [ selectedMenuImages, setSelectedMenuImages ] = useState();
 
     useEffect(() => {
         const headerOptions = headerData.navCatagories.filter(({ id }) => {
             return selectedId === id;
         });
-        setSelectedMenuItems(filterChildLinks(headerOptions[0].children_data));
+
+        const menuItems = filterChildLinks(headerOptions[0].children_data)
+        setSelectedMenuItems(menuItems);
+
+        const menuImages = filterImages(headerOptions[0]);
+        console.log(menuImages)
+        setSelectedMenuImages(menuImages);
     }, []);
 
-    return <div className="menu" onMouseOver={(event) => event.stopPropagation()}>
+    return <div className={`menu menu-${selectedId}`} onMouseOver={(event) => event.stopPropagation()}>
         { selectedMenuItems && Object.keys(selectedMenuItems).map((val, index) => {
             return <div key={val.title} className={`menu__column menu__column--index${index}`}>
                 <div className="menu__column-title">{ selectedMenuItems[val].title }</div>
@@ -22,7 +29,13 @@ const Menu = ({ id: selectedId }) => {
                 })}</div>
             </div>
         })}
-    </div>;
+        {selectedMenuImages && <div className="image-container">{selectedMenuImages.map(({ url, title }) => {
+            return <div className="image">
+                <img src={url} className="image__picture"/>
+                <div className="image__title">{ title }</div>
+            </div>
+        })}
+    </div>}</div>;
 }
 
 export default Menu;
