@@ -23,7 +23,6 @@ const filterChildLinks = (children_data) => {
 
 const filterImages = (menuData) => {
     const returnObject = {};
-    console.log(menuData);
     Object.keys(menuData).forEach((key) => {
         const isImageProp = key.match(/dropdown_image/g);
         if(isImageProp && (key !== 'dropdown_image_enabled')){
@@ -32,7 +31,6 @@ const filterImages = (menuData) => {
             if(!returnObject[imageIndex]){
                 returnObject[imageIndex] = {};
             }
-            console.log(propVal);
             returnObject[imageIndex][propVal] = menuData[key];
         }
     });

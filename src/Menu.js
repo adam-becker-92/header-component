@@ -15,7 +15,6 @@ const Menu = ({ id: selectedId }) => {
         setSelectedMenuItems(menuItems);
 
         const menuImages = filterImages(headerOptions[0]);
-        console.log(menuImages)
         setSelectedMenuImages(menuImages);
     }, []);
 
