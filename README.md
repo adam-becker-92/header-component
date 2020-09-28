@@ -1,4 +1,4 @@
-###Server Side Rendered - Header Component###
+### Server Side Rendered - Header Component ###
 
 To run 
 
